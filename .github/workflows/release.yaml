@@ -32,7 +32,7 @@ jobs:
           VERSION: ${{ steps.version.outputs.version }}
       - name: add terraform docs
         run: |
-          cd ./.github/actions/
+          cd ./actions/
           npm install -g action-docs
           for entry in $(ls -d */) 
           do
