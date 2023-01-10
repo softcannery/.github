@@ -1,9 +1,7 @@
-name: Release Docker Images
+name: Docker Images WFT
 on:
   push:
-    branches:
-      - master
-
+    branches: [$default-branch]
 jobs:
   release:
     runs-on: ubuntu-latest
