@@ -22,7 +22,7 @@ inputs:
   git-username:
     description: the git username used to operate on the git repository. If not specified it's loaded from the git credentials file
     required: false
-    default: ${{ github.actor }}'
+    default: ${{ github.actor }}
   git-author-name:
     description: the user name to git commit
     required: false
