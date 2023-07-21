@@ -22,7 +22,7 @@ inputs:
   git-username:
     description: the git username used to operate on the git repository. If not specified it's loaded from the git credentials file
     required: false
-    default: 'Actions Bot'
+    default: ${{ github.actor }}'
   git-author-name:
     description: the user name to git commit
     required: false
@@ -38,7 +38,7 @@ runs:
       uses: docker/login-action@v2
       with:
         registry: ghcr.io
-        username: ${{ github.actor }}
+        username: ${{ inputs.git-username }}
         password: ${{ inputs.git-token }}
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
