@@ -44,7 +44,8 @@ runs:
         registry: ghcr.io
         username: ${{ inputs.git-username }}
         password: ${{ inputs.git-token }}
-    - name: generate tags
+    - name: Generate tags
+      shell: bash
       run: |
         if [[ ${{ inputs.release }} == 'true' ]]; then
           TAGS="ghcr.io/${{ github.repository }}/${{ inputs.image-name }}:${{ github.sha }} \n
