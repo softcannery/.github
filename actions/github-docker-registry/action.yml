@@ -19,6 +19,10 @@ inputs:
     description: set version
     required: false
     default: 'snapshot'
+  release:
+    description: is release
+    required: false
+    default: 'true'
   git-username:
     description: the git username used to operate on the git repository. If not specified it's loaded from the git credentials file
     required: false
@@ -40,12 +44,22 @@ runs:
         registry: ghcr.io
         username: ${{ inputs.git-username }}
         password: ${{ inputs.git-token }}
+    - name: generate tags
+      run: |
+        if [[ ${{ inputs.release }} == 'true' ]]; then
+          TAGS="ghcr.io/${{ github.repository }}/${{ inputs.image-name }}:${{ github.sha }} \n
+          ghcr.io/${{ github.repository }}/${{ inputs.image-name }}:${{ inputs.version }} \n
+          ghcr.io/${{ github.repository }}/${{ inputs.image-name }}:latest \n"
+          echo "TAGS<<EOF" >> $GITHUB_ENV
+          echo $TAGS >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+        else
+          TAGS="ghcr.io/${{ github.repository }}/${{ inputs.image-name }}:${{ inputs.version }}"
+          echo "TAGS=$TAGS" >> $GITHUB_ENV
+        fi
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
         context: ./${{ inputs.chart-path }}
         push: true
-        tags: |
-          ghcr.io/${{ github.repository }}/${{ inputs.image-name }}:${{ github.sha }}
-          ghcr.io/${{ github.repository }}/${{ inputs.image-name }}:${{ inputs.version }}
-          ghcr.io/${{ github.repository }}/${{ inputs.image-name }}:latest
+        tags: ${{ env.TAGS }}
