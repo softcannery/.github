@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 0
       - name: New version
         id: version
-        uses: softcannery/github-build-tools/.github/actions/jx-release-version@master
+        uses: softcannery/.github/actions/jx-release-version@master
         with:
           github-token: ${{ secrets.ACTIONS_TOKEN }}
       - name: update version
@@ -41,7 +41,7 @@ jobs:
             cd ../
           done
       - name: Create Release Tag
-        uses: softcannery/github-build-tools/.github/actions/release-tag@master
+        uses: softcannery/.github/actions/release-tag@master
         with:
           git-token: ${{ secrets.ACTIONS_TOKEN }}
           version: ${{ steps.version.outputs.version }}
