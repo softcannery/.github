@@ -48,9 +48,10 @@ runs:
       shell: bash
       run: |
         if [[ ${{ inputs.release }} == 'true' ]]; then
-          TAGS="ghcr.io/${{ github.repository }}/${{ inputs.image-name }}:${{ github.sha }}\n
-          ghcr.io/${{ github.repository }}/${{ inputs.image-name }}:${{ inputs.version }}\n
+          TAGS="ghcr.io/${{ github.repository }}/${{ inputs.image-name }}:${{ github.sha }}
+          ghcr.io/${{ github.repository }}/${{ inputs.image-name }}:${{ inputs.version }}
           ghcr.io/${{ github.repository }}/${{ inputs.image-name }}:latest"
+          echo "--- $TAGS"
           echo "TAGS<<EOF" >> $GITHUB_ENV
           echo $TAGS >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
